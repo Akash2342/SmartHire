@@ -1,0 +1,7 @@
+package com.backend.naukri.common.enums;
+
+public enum NotificationType {
+    APPLICATION_SUBMITTED, APPLICATION_STATUS_CHANGED,
+    NEW_APPLICATION_RECEIVED, JOB_RECOMMENDATION,
+    MESSAGE_RECEIVED, COMPANY_VERIFIED, SYSTEM
+}
