@@ -15,6 +15,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Intercepts every request and validates the Bearer JWT token from the
+ * Authorization header. Sets the authenticated userId as a request attribute
+ * so controllers can read it via @RequestAttribute("userId").
+ */
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -51,6 +56,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        // Expose userId to controllers without requiring a DB lookup
+        request.setAttribute("userId", userId);
         filterChain.doFilter(request, response);
     }
 }

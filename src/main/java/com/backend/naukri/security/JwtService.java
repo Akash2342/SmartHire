@@ -11,6 +11,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * Handles JWT token generation and validation.
+ * Uses HS512 signing. Tokens are stateless — not stored in DB.
+ */
 @Service
 public class JwtService {
 
@@ -24,6 +28,9 @@ public class JwtService {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
+    /**
+     * Generates a signed JWT containing userId, email, and role as claims.
+     */
     public String generateToken(UUID userId, String email, String role) {
         return Jwts.builder()
                 .subject(userId.toString())
@@ -51,6 +58,7 @@ public class JwtService {
         return extractAllClaims(token).get("role", String.class);
     }
 
+    /** Returns false if token is expired or signature is invalid. */
     public boolean isTokenValid(String token) {
         try {
             Claims claims = extractAllClaims(token);
