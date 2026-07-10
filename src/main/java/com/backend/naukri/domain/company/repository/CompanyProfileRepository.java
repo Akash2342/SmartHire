@@ -11,5 +11,10 @@ import java.util.UUID;
 public interface CompanyProfileRepository extends JpaRepository<CompanyProfile, UUID> {
     Optional<CompanyProfile> findByUserId(UUID userId);
     boolean existsByUserId(UUID userId);
+
+    /** Returns all companies filtered by verification status. */
     List<CompanyProfile> findAllByVerificationStatus(VerificationStatus status);
+
+    /** Used for admin dashboard pending count. */
+    long countByVerificationStatus(VerificationStatus status);
 }

@@ -18,6 +18,9 @@ public interface JobPostingRepository extends JpaRepository<JobPosting, UUID> {
     /** Returns all jobs for a company ordered by newest first — used in recruiter dashboard. */
     List<JobPosting> findByCompanyIdOrderByCreatedAtDesc(UUID companyId);
 
+    /** Used for admin dashboard active job count. */
+    long countByStatus(JobStatus status);
+
     /** Finds a job only if it belongs to the given company — prevents cross-recruiter access. */
     Optional<JobPosting> findByIdAndCompanyId(UUID id, UUID companyId);
 
